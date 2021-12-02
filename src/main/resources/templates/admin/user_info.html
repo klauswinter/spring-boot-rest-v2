@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+</head>
+<body>
+    <div align="center">
+        <table border="2" cellpadding="10">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Action</th>
+            </tr>
+
+            <tr>
+                <td th:text="${show_users.getId()}">...</td>
+                <td th:text="${show_users.getUsername()}">...</td>
+                <td th:text="${show_users.getEmail()}">...</td>
+                <td th:text="${show_users.getPassword()}">...</td>
+                <td>
+                    <form th:method="GET" th:action="@{/admin/edit/{id}(id=${show_users.getId()})}">
+                        <label>
+                            <input th:type="submit" th:value="Edit">
+                        </label>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+        <form th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout"/>
+        </form>
+    </div>
+
+</body>
+</html>
