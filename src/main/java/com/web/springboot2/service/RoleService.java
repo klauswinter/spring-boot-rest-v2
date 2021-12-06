@@ -1,11 +1,9 @@
 package com.web.springboot2.service;
 
 import com.web.springboot2.model.Role;
-import com.web.springboot2.model.User;
 
-import java.util.List;
+import java.util.Set;
 
 public interface RoleService {
-    void saveRole(Role role);
-    List<Role> getAllRoles();
+    Set<Role> getAllRoles();
 }

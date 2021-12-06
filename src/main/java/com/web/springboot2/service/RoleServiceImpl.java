@@ -2,35 +2,25 @@ package com.web.springboot2.service;
 
 import com.web.springboot2.model.Role;
 import com.web.springboot2.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
-@Transactional
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
-    @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository) {
+    public RoleServiceImpl (RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
     @Override
-    public void saveRole(Role role) {
-        roleRepository.save(role);
-    }
-
-    public Role getRoleByName(String role) {
-        return roleRepository.getRoleByName(role);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Role> getAllRoles() {
-        return (List<Role>) roleRepository.findAll();
+    public Set<Role> getAllRoles() {
+        Iterable<Role>  iterable = roleRepository.findAll();
+        Set<Role> set = new HashSet<>();
+        iterable.forEach(set::add);
+        return set;
     }
 }

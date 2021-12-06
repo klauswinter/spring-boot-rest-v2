@@ -1,9 +1,6 @@
 package com.web.springboot2.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -11,50 +8,46 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "roles")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="roles")
 public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
-
-    @Column(name = "role")
-    private String role;
-
-    @ManyToMany
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @Column
+    private String name;
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<User> users;
 
-    public Role(String role) {
-        this.role = role;
+    public Role(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return this.role;
+        return name;
     }
 
     @Override
     public String getAuthority() {
-        return getRole();
+        return name;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Role)) return false;
-        Role role1 = (Role) o;
-        return Objects.equals(getId(), role1.getId()) && Objects.equals(getRole(), role1.getRole()) && Objects.equals(getUsers(), role1.getUsers());
+        Role role = (Role) o;
+        return Objects.equals(getId(), role.getId()) && Objects.equals(getName(), role.getName()) && Objects.equals(getUsers(), role.getUsers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRole(), getUsers());
+        return Objects.hash(getId(), getName(), getUsers());
     }
 }
