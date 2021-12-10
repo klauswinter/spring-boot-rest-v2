@@ -1,4 +1,4 @@
-package com.example.springboot3.controller;
+package com.web.springboot2.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
