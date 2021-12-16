@@ -23,6 +23,18 @@ public class MyExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<DataInfoHandler> handleException(NoUserWithSuchLoginException e) {
+        return new ResponseEntity<>(dataInfoHandler.getInstanceWithInfo(e.getMessage()),
+                HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<DataInfoHandler> handleException(UserWithSuchLoginExistException e) {
+        return new ResponseEntity<>(dataInfoHandler.getInstanceWithInfo(e.getMessage()),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<DataInfoHandler> handleException(Exception e) {
         return new ResponseEntity<>(dataInfoHandler.getInstanceWithInfo(e.getMessage()),
                 HttpStatus.BAD_REQUEST);

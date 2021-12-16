@@ -60,26 +60,16 @@ public class RestUsersController {
         }
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<DataInfoHandler> updateUser(@PathVariable("id") Long id, @Validated @RequestBody User user,
-                                                      BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            String error = getErrorsFromBindingResult(bindingResult);
-            return new ResponseEntity<>(new DataInfoHandler(error), HttpStatus.BAD_REQUEST);
-        }
-
-        try {
-            userService.updateUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            throw new UserWithSuchLoginExistException("User with such login is already exist");
-        }
+    @PutMapping("/users")
+    public ResponseEntity<User> updateUser(@Validated @RequestBody User user) {
+        userService.updateUser(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<DataInfoHandler> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>(new DataInfoHandler("User was deleted"), HttpStatus.OK);
+        return new ResponseEntity<>(new DataInfoHandler("User with ID = " + id + " was deleted"), HttpStatus.OK);
     }
 
     private String getErrorsFromBindingResult(BindingResult bindingResult) {

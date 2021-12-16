@@ -1,20 +1,36 @@
 //package com.web.springboot2.model;
 //
+//import com.web.springboot2.service.RoleService;
 //import com.web.springboot2.service.UserService;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Component;
 //import org.springframework.transaction.annotation.Transactional;
 //
 //import javax.annotation.PostConstruct;
+//import java.util.HashSet;
 //import java.util.Set;
 //
 //@Component
-//@Transactional
 //public class DbInit {
 //
-//    private final UserService userService;
+//    UserService userService;
+//    RoleService roleService;
 //
-//    public DbInit(UserService userService) {
+//    @Autowired
+//    public DbInit(UserService userService, RoleService roleService) {
 //        this.userService = userService;
+//        this.roleService = roleService;
+//    }
+//
+//    Role adminRole = new Role("ADMIN");
+//    Role userRole = new Role("USER");
+//
+//    Set<Role> adminSetRole = new HashSet<>();
+//    Set<Role> userSetRole = new HashSet<>();
+//
+//    {
+//        adminSetRole.add(adminRole);
+//        userSetRole.add(userRole);
 //    }
 //
 //    @PostConstruct
@@ -25,7 +41,7 @@
 //        admin.setAge(35);
 //        admin.setEmail("admin@mail.ru");
 //        admin.setPassword("admin");
-//        admin.setRoles(Set.of(new Role("ADMIN")));
+//        admin.setRoles(adminSetRole);
 //        userService.createNewUser(admin);
 //
 //        User user = new User();
@@ -34,7 +50,7 @@
 //        user.setAge(30);
 //        user.setEmail("user@mail.ru");
 //        user.setPassword("user");
-//        user.setRoles(Set.of(new Role("USER")));
+//        user.setRoles(userSetRole);
 //        userService.createNewUser(user);
 //    }
 //}
