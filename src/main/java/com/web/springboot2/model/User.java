@@ -17,7 +17,6 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -27,13 +26,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column
-    private String name;
-
-    @Column
-    private String lastName;
-
-    @Column
-    private int age;
+    private String username;
 
     @Column(unique = true)
     private String email;
@@ -48,6 +41,16 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
+    public User() {
+    }
+
+    public User(String username, String email, String password, Set<Role> roles) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
     @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     @Override

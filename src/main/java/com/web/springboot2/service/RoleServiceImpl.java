@@ -23,4 +23,14 @@ public class RoleServiceImpl implements RoleService {
         iterable.forEach(set::add);
         return set;
     }
+
+    @Override
+    public Role getRoleByName(String name) {
+        return roleRepository.getRoleByName(name);
+    }
+
+    @Override
+    public Role save(Role role) {
+        return roleRepository.save(role);
+    }
 }
